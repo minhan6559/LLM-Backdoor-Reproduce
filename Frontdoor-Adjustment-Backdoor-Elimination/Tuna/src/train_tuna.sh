@@ -1,0 +1,54 @@
+#!/bin/bash
+
+MODEL=meta-llama/Llama-2-7b-chat-hf
+
+
+datadir=$1
+NO_DISCRIMINATE=False
+LENPEN=1.0  
+savedir=./checkpoints/tuna_p
+NUM_TRAIN_EPOCHS=2           #1/2
+PER_DEVICE_TRAIN_BATCH_SIZE=4
+GRADIENT_ACCUMULATION_STEPS=1 #10*11*num_gpu =batch_size
+SAVE_STEPS=0.49
+LR=$2                        
+MLE_WEIGHT=1.0                
+MARGIN=0.1                     
+BETA1=0.9
+BETA2=0.999
+WARMUP_STEPS=2
+REMOVE_UNUSED_COLUMNS=False
+
+
+# Resolve path to this script's directory for robust relative paths
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+DS_CONFIG_PATH="$SCRIPT_DIR/configs/deepspeed_config.json"
+
+deepspeed src/train_tuna.py \
+    --model_name_or_path ${MODEL} \
+    --data_path $datadir \
+    --no_discriminate $NO_DISCRIMINATE \
+    --lenpen $LENPEN \
+    --output_dir $savedir \
+    --num_train_epochs $NUM_TRAIN_EPOCHS \
+    --per_device_train_batch_size $PER_DEVICE_TRAIN_BATCH_SIZE \
+    --per_device_eval_batch_size 1 \
+    --gradient_accumulation_steps $GRADIENT_ACCUMULATION_STEPS \
+    --evaluation_strategy "no" \
+    --save_strategy "steps" \
+    --save_steps $SAVE_STEPS \
+    --save_total_limit 1 \
+    --learning_rate $LR \
+    --mle_weight $MLE_WEIGHT \
+    --margin $MARGIN \
+    --adam_beta1 $BETA1 \
+    --adam_beta2 $BETA2 \
+    --warmup_steps $WARMUP_STEPS \
+    --logging_steps 2 \
+    --lr_scheduler_type "cosine" \
+    --report_to "tensorboard" \
+    --gradient_checkpointing True \
+    --log_level debug \
+    --remove_unused_columns $REMOVE_UNUSED_COLUMNS \
+    --deepspeed "$DS_CONFIG_PATH" \
+    --fp16 True 2>&1 | tee training.log

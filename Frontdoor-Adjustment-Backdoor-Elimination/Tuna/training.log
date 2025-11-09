@@ -1,0 +1,59 @@
+[2025-11-09 08:55:19,736] [WARNING] [runner.py:232:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+[2025-11-09 08:55:19,736] [INFO] [runner.py:630:main] cmd = /home/minhan6559/miniconda3/envs/fabe/bin/python -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMF19 --master_addr=127.0.0.1 --master_port=29500 --enable_each_rank_log=None --log_level=info src/train_tuna.py --model_name_or_path meta-llama/Llama-2-7b-chat-hf --data_path data/llama_file.json --no_discriminate False --lenpen 1.0 --output_dir ./checkpoints/tuna_p --num_train_epochs 2 --per_device_train_batch_size 4 --per_device_eval_batch_size 1 --gradient_accumulation_steps 1 --evaluation_strategy no --save_strategy steps --save_steps 0.49 --save_total_limit 1 --learning_rate 1e-5 --mle_weight 1.0 --margin 0.1 --adam_beta1 0.9 --adam_beta2 0.999 --warmup_steps 2 --logging_steps 2 --lr_scheduler_type cosine --report_to tensorboard --gradient_checkpointing True --log_level debug --remove_unused_columns False --deepspeed /mnt/d/GitClone/Frontdoor-Adjustment-Backdoor-Elimination/Tuna/src/configs/deepspeed_config.json --fp16 True
+[2025-11-09 08:55:24,882] [INFO] [launch.py:162:main] WORLD INFO DICT: {'localhost': [0]}
+[2025-11-09 08:55:24,882] [INFO] [launch.py:168:main] nnodes=1, num_local_procs=1, node_rank=0
+[2025-11-09 08:55:24,882] [INFO] [launch.py:179:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0]})
+[2025-11-09 08:55:24,882] [INFO] [launch.py:180:main] dist_world_size=1
+[2025-11-09 08:55:24,882] [INFO] [launch.py:184:main] Setting CUDA_VISIBLE_DEVICES=0
+[2025-11-09 08:55:24,900] [INFO] [launch.py:272:main] process 1701 spawned with command: ['/home/minhan6559/miniconda3/envs/fabe/bin/python', '-u', 'src/train_tuna.py', '--local_rank=0', '--model_name_or_path', 'meta-llama/Llama-2-7b-chat-hf', '--data_path', 'data/llama_file.json', '--no_discriminate', 'False', '--lenpen', '1.0', '--output_dir', './checkpoints/tuna_p', '--num_train_epochs', '2', '--per_device_train_batch_size', '4', '--per_device_eval_batch_size', '1', '--gradient_accumulation_steps', '1', '--evaluation_strategy', 'no', '--save_strategy', 'steps', '--save_steps', '0.49', '--save_total_limit', '1', '--learning_rate', '1e-5', '--mle_weight', '1.0', '--margin', '0.1', '--adam_beta1', '0.9', '--adam_beta2', '0.999', '--warmup_steps', '2', '--logging_steps', '2', '--lr_scheduler_type', 'cosine', '--report_to', 'tensorboard', '--gradient_checkpointing', 'True', '--log_level', 'debug', '--remove_unused_columns', 'False', '--deepspeed', '/mnt/d/GitClone/Frontdoor-Adjustment-Backdoor-Elimination/Tuna/src/configs/deepspeed_config.json', '--fp16', 'True']
+/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/transformers/training_args.py:1568: FutureWarning: `evaluation_strategy` is deprecated and will be removed in version 4.46 of 🤗 Transformers. Use `eval_strategy` instead
+  warnings.warn(
+Downloading shards:   0%|          | 0/2 [00:00<?, ?it/s]Downloading shards:  50%|█████     | 1/2 [08:46<08:46, 526.17s/it]Downloading shards: 100%|██████████| 2/2 [11:50<00:00, 324.80s/it]Downloading shards: 100%|██████████| 2/2 [11:50<00:00, 355.01s/it]
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "src/train_tuna.py", line 351, in <module>
+[rank0]:     train()
+[rank0]:   File "src/train_tuna.py", line 293, in train
+[rank0]:     model = transformers.AutoModelForCausalLM.from_pretrained(
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/transformers/models/auto/auto_factory.py", line 564, in from_pretrained
+[rank0]:     return model_class.from_pretrained(
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/transformers/modeling_utils.py", line 4097, in from_pretrained
+[rank0]:     model = cls(config, *model_args, **model_kwargs)
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 529, in wrapper
+[rank0]:     f(module, *args, **kwargs)
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/transformers/models/llama/modeling_llama.py", line 1110, in __init__
+[rank0]:     self.model = LlamaModel(config)
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 529, in wrapper
+[rank0]:     f(module, *args, **kwargs)
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/transformers/models/llama/modeling_llama.py", line 845, in __init__
+[rank0]:     [LlamaDecoderLayer(config, layer_idx) for layer_idx in range(config.num_hidden_layers)]
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/transformers/models/llama/modeling_llama.py", line 845, in <listcomp>
+[rank0]:     [LlamaDecoderLayer(config, layer_idx) for layer_idx in range(config.num_hidden_layers)]
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 529, in wrapper
+[rank0]:     f(module, *args, **kwargs)
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/transformers/models/llama/modeling_llama.py", line 633, in __init__
+[rank0]:     self.mlp = LlamaMLP(config)
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 529, in wrapper
+[rank0]:     f(module, *args, **kwargs)
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/transformers/models/llama/modeling_llama.py", line 235, in __init__
+[rank0]:     self.gate_proj = nn.Linear(self.hidden_size, self.intermediate_size, bias=config.mlp_bias)
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 539, in wrapper
+[rank0]:     self._post_init_method(module)
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 1156, in _post_init_method
+[rank0]:     self._zero_init_param(param)
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 1115, in _zero_init_param
+[rank0]:     param.partition()
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 1487, in partition
+[rank0]:     self._partition(param_list, has_been_updated=has_been_updated, free_data=True)
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 1636, in _partition
+[rank0]:     self._partition_param(param, has_been_updated=has_been_updated, free_data=True)
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/deepspeed/utils/nvtx.py", line 20, in wrapped_fn
+[rank0]:     ret_val = func(*args, **kwargs)
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/deepspeed/runtime/zero/partition_parameters.py", line 1709, in _partition_param
+[rank0]:     partitioned_tensor = get_accelerator().pin_memory(partitioned_tensor)
+[rank0]:   File "/home/minhan6559/miniconda3/envs/fabe/lib/python3.8/site-packages/deepspeed/accelerator/cuda_accelerator.py", line 298, in pin_memory
+[rank0]:     return tensor.pin_memory()
+[rank0]: RuntimeError: CUDA error: out of memory
+[rank0]: CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+[rank0]: For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+[rank0]: Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
